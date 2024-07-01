@@ -49,27 +49,27 @@ fun CryptoScreen(viewModel: CryptoViewModel) {
     val cryptoPrices = viewModel.cryptoPrices.collectAsState()
 
     LaunchedEffect(Unit) {
-//        viewModel.fetchCryptoPrices()
+        viewModel.fetchCryptoPrices()
     }
 
     // Create a list of mock crypto data
-    val mockCryptoList = listOf(
-        Crypto("BTC", "35000.00"),
-        Crypto("ETH", "2500.00"),
-        Crypto("ADA", "1.50"),
-        Crypto("DOGE", "0.30"),
-        Crypto("MyFakeCoin", "123.45") // Your custom mock crypto data
-    )
+//    val mockCryptoList = listOf(
+//        Crypto("BTC", "35000.00"),
+//        Crypto("ETH", "2500.00"),
+//        Crypto("ADA", "1.50"),
+//        Crypto("DOGE", "0.30"),
+//        Crypto("MyFakeCoin", "123.45") // Your custom mock crypto data
+//    )
 
     LazyColumn(
         modifier = Modifier.fillMaxSize().padding(16.dp)
     ) {
-//        items(cryptoPrices.value) { crypto ->
-//            CryptoItem(crypto)
-//        }
-        items(mockCryptoList) { crypto ->
+        items(cryptoPrices.value) { crypto ->
             CryptoItem(crypto)
         }
+//        items(mockCryptoList) { crypto ->
+//            CryptoItem(crypto)
+//        }
     }
 }
 
@@ -80,7 +80,9 @@ fun CryptoItem(crypto: Crypto) {
             .fillMaxWidth()
             .padding(vertical = 8.dp)
     ) {
-        Text(text = "Symbol: ${crypto.symbol}", style = MaterialTheme.typography.bodySmall)
-        Text(text = "Price: ${crypto.price}", style = MaterialTheme.typography.bodySmall)
+//        Text(text = "Symbol: ${crypto.symbol}", style = MaterialTheme.typography.bodySmall)
+//        Text(text = "Price: ${crypto.price}", style = MaterialTheme.typography.bodySmall)
+        Text(text = "Symbol: ${crypto.username}", style = MaterialTheme.typography.bodySmall)
+        Text(text = "Price: ${crypto.phone}", style = MaterialTheme.typography.bodySmall)
     }
 }

@@ -15,6 +15,7 @@ class CryptoViewModel(private val repository: CryptoRepository) : ViewModel() {
     fun fetchCryptoPrices() {
         viewModelScope.launch {
             val prices = repository.getCryptoPrices()
+
             _cryptoPrices.value = prices
         }
     }
