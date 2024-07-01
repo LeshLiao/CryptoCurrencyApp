@@ -10,6 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.palettex.cryptocurrencyapp.model.ApiResponse
@@ -39,7 +40,7 @@ fun CryptoDataScreen(viewModel: CryptoViewModel) {
     }
 
     LaunchedEffect(Unit) {
-        viewModel.fetchCryptoData("BTC,ETH,BNB,USDT,ADA,SOL,XRP,DOT,DOGE,UNI", "USD,EUR")
+        viewModel.fetchCryptoData("BTC,ETH,BNB,USDT,ADA,SOL,XRP,DOT,DOGE,UNI,USDC,BUSD,XLM,LTC,BCH,DAI,LINK,AAVE,MKR,ATOM", "USD,EUR")
     }
 }
 
@@ -55,14 +56,24 @@ fun Table(apiResponse: ApiResponse) {
         "XRP" to apiResponse.XRP,
         "DOT" to apiResponse.DOT,
         "DOGE" to apiResponse.DOGE,
-        "UNI" to apiResponse.UNI
+        "UNI" to apiResponse.UNI,
+        "USDC" to apiResponse.USDC,
+        "BUSD" to apiResponse.BUSD,
+        "XLM" to apiResponse.XLM,
+        "LTC" to apiResponse.LTC,
+        "BCH" to apiResponse.BCH,
+        "DAI" to apiResponse.DAI,
+        "LINK" to apiResponse.LINK,
+        "AAVE" to apiResponse.AAVE,
+        "MKR" to apiResponse.MKR,
+        "ATOM" to apiResponse.ATOM
     )
 
     Column {
         Row(modifier = Modifier.fillMaxWidth()) {
-            Text(text = "TYPE", modifier = Modifier.weight(1f))
-            Text(text = "USD", modifier = Modifier.weight(1f))
-            Text(text = "EUR", modifier = Modifier.weight(1f))
+            Text(text = "TYPE", modifier = Modifier.weight(1f), fontWeight = FontWeight.Bold)
+            Text(text = "USD", modifier = Modifier.weight(1f), fontWeight = FontWeight.Bold)
+            Text(text = "EUR", modifier = Modifier.weight(1f), fontWeight = FontWeight.Bold)
         }
 
         Spacer(modifier = Modifier.height(8.dp))
