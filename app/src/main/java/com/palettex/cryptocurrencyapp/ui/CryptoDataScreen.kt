@@ -71,9 +71,9 @@ fun Table(apiResponse: ApiResponse) {
 
     Column {
         Row(modifier = Modifier.fillMaxWidth()) {
-            Text(text = "TYPE", modifier = Modifier.weight(1f), fontWeight = FontWeight.Bold)
-            Text(text = "USD", modifier = Modifier.weight(1f), fontWeight = FontWeight.Bold)
-            Text(text = "EUR", modifier = Modifier.weight(1f), fontWeight = FontWeight.Bold)
+            Text(text = "TYPE", modifier = Modifier.weight(1f), fontWeight = FontWeight.Bold, fontSize = 20.sp)
+            Text(text = "USD", modifier = Modifier.weight(1f), fontWeight = FontWeight.Bold, fontSize = 20.sp)
+            Text(text = "EUR", modifier = Modifier.weight(1f), fontWeight = FontWeight.Bold, fontSize = 20.sp)
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -81,7 +81,7 @@ fun Table(apiResponse: ApiResponse) {
         LazyColumn {
             items(data) { (symbol, currencyData) ->
                 Row(modifier = Modifier.fillMaxWidth()) {
-                    Text(text = symbol, modifier = Modifier.weight(1f))
+                    Text(text = symbol, modifier = Modifier.weight(1f), fontWeight = FontWeight.Bold)
                     Text(text = currencyData.USD.toString(), modifier = Modifier.weight(1f))
                     Text(text = currencyData.EUR.toString(), modifier = Modifier.weight(1f))
                 }
