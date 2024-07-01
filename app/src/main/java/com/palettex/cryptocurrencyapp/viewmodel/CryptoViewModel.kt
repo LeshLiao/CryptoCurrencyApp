@@ -11,13 +11,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class CryptoViewModel(private val repository: CryptoRepository) : ViewModel() {
-    private val _cryptoData = MutableStateFlow(ApiResponse(Raw("","",0.0)))
-    val cryptoData: StateFlow<ApiResponse> get() = _cryptoData
+    private val _cryptoData = MutableStateFlow<ApiResponse?>(null)
+    val cryptoData: StateFlow<ApiResponse?> get() = _cryptoData
 
-    fun fetchCryptoData(fromSymbol: String, toSymbol: String) {
+    fun fetchCryptoData(fromSymbols: String, toSymbols: String) {
         viewModelScope.launch {
             try {
-                val prices = repository.getCryptoPrices(fromSymbol, toSymbol)
+                val prices = repository.getCryptoPrices(fromSymbols, toSymbols)
                 _cryptoData.value = prices
             } catch (e: Exception) {
                 e.printStackTrace() // Handle the exception

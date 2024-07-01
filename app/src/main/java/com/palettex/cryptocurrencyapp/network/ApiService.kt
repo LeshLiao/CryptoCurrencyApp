@@ -6,10 +6,9 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("data/generateAvg")
+    @GET("data/pricemulti")
     suspend fun getCryptoData(
-        @Query("fsym") fromSymbol: String,
-        @Query("tsym") toSymbol: String,
-        @Query("e") exchange: String = "coinbase" // Default to coinbase
+        @Query("fsyms") fromSymbols: String,
+        @Query("tsyms") toSymbols: String
     ): ApiResponse
 }

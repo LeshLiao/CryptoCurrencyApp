@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.palettex.cryptocurrencyapp.network.RetrofitClient
 import com.palettex.cryptocurrencyapp.repository.CryptoRepository
+import com.palettex.cryptocurrencyapp.ui.CryptoDataScreen
 import com.palettex.cryptocurrencyapp.viewmodel.CryptoViewModel
 import com.palettex.cryptocurrencyapp.viewmodel.CryptoViewModelFactory
 
@@ -37,34 +38,3 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun CryptoDataScreen(viewModel: CryptoViewModel) {
-    val cryptoData by viewModel.cryptoData.collectAsState()
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        Spacer(modifier = Modifier.height(20.dp))
-        Text(
-            text = "Crypto Online Price",
-            style = TextStyle(fontSize = 24.sp)
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-
-        if (cryptoData.RAW != null) {
-            Column {
-                Text(text = "FROMSYMBOL: ${cryptoData.RAW!!.FROMSYMBOL}")
-                Text(text = "TOSYMBOL: ${cryptoData.RAW!!.TOSYMBOL}")
-                Text(text = "PRICE: ${cryptoData.RAW!!.PRICE}")
-            }
-        } else {
-            Text(text = "Loading...")
-        }
-    }
-
-    LaunchedEffect(Unit) {
-        viewModel.fetchCryptoData("BTC", "USD")
-    }
-}
