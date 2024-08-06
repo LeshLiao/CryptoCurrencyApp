@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -15,16 +16,40 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.palettex.cryptocurrencyapp.model.ApiResponse
 import com.palettex.cryptocurrencyapp.viewmodel.CryptoViewModel
+import com.palettex.cryptocurrencyapp.model.MenuData
 
 @Composable
 fun CryptoDataScreen(viewModel: CryptoViewModel) {
     val cryptoData by viewModel.cryptoData.collectAsState()
+//    var quantity by remember { mutableStateOf(1) } // State for quantity selector
+    val cartItems by viewModel.cartItems.observeAsState(emptyList())
+
+    val menuList = listOf(
+        MenuData(11,"Burger"),
+        MenuData(22,"Pizza"),
+        MenuData(33,"Salad")
+    )
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
+
+        menuList.forEach { entree ->
+            Text(
+                text = entree.name,
+                style = TextStyle(fontSize = 24.sp)
+            )
+            val quantity = cartItems.find { it.id == entree.index }?.quantity ?: 0
+            QuantitySelector(
+                quantity = quantity,
+                onQuantityChange = { newQuantity -> viewModel.updateQuantity(entree.index, newQuantity) },
+                modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 4.dp),
+            )
+        }
+
+
         Spacer(modifier = Modifier.height(20.dp))
         Text(
             text = "Crypto Online Price",
@@ -34,15 +59,20 @@ fun CryptoDataScreen(viewModel: CryptoViewModel) {
 
         if (cryptoData != null) {
             Table(cryptoData!!)
+
         } else {
             Text(text = "Loading...")
         }
+
+
     }
 
     LaunchedEffect(Unit) {
         viewModel.fetchCryptoData("BTC,ETH,BNB,USDT,ADA,SOL,XRP,DOT,DOGE,UNI,USDC,BUSD,XLM,LTC,BCH,DAI,LINK,AAVE,MKR,ATOM", "USD,EUR")
     }
 }
+
+
 
 @Composable
 fun Table(apiResponse: ApiResponse) {
@@ -90,4 +120,3 @@ fun Table(apiResponse: ApiResponse) {
         }
     }
 }
-
