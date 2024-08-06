@@ -44,6 +44,7 @@ import kotlinx.coroutines.launch
 fun QuantitySelector(
     quantity: Int,
     onQuantityChange: (Int) -> Unit,
+    isCollapse: Boolean,
     modifier: Modifier = Modifier
 ) {
     val scope = rememberCoroutineScope()
@@ -69,7 +70,7 @@ fun QuantitySelector(
             .background(Color.White)
             .animateContentSize()
     ) {
-        if (quantity > 0) {
+        if (quantity > 0 && !isCollapse) {
             Card(
                 modifier = Modifier
                     .size(32.dp)
@@ -125,11 +126,22 @@ fun QuantitySelector(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_plus),
-                    contentDescription = "Increase quantity",
-                    tint = if (quantity == 0) Color.Black else Color.White
-                )
+                if (isCollapse && quantity > 0) {
+                    BasicText(
+                        text = "$quantity",
+                        style = TextStyle(
+                            fontWeight = FontWeight.W600,
+                            fontSize = 14.sp,
+                            color = Color.White
+                        ),
+                    )
+                } else {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_plus),
+                        contentDescription = "Increase quantity",
+                        tint = if (quantity == 0) Color.Black else Color.White
+                    )
+                }
             }
         }
     }

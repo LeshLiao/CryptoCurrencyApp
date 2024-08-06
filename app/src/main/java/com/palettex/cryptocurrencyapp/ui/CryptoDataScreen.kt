@@ -21,13 +21,25 @@ import com.palettex.cryptocurrencyapp.model.MenuData
 @Composable
 fun CryptoDataScreen(viewModel: CryptoViewModel) {
     val cryptoData by viewModel.cryptoData.collectAsState()
-//    var quantity by remember { mutableStateOf(1) } // State for quantity selector
     val cartItems by viewModel.cartItems.observeAsState(emptyList())
+    val currentExtendIndex by viewModel.currentExtendState.observeAsState()
 
     val menuList = listOf(
-        MenuData(11,"Burger"),
-        MenuData(22,"Pizza"),
-        MenuData(33,"Salad")
+        MenuData(11, "Burger"),
+        MenuData(22, "Pizza"),
+        MenuData(33, "Salad"),
+        MenuData(44, "French Fries"),
+        MenuData(55, "Chicken Nuggets"),
+        MenuData(66, "Pasta"),
+        MenuData(77, "Sushi"),
+        MenuData(88, "Ice Cream"),
+        MenuData(99, "Steak"),
+        MenuData(100, "Fish and Chips"),
+        MenuData(101, "Tacos"),
+        MenuData(102, "Burrito"),
+        MenuData(103, "Dim Sum"),
+        MenuData(104, "Ramen"),
+        MenuData(105, "Curry")
     )
 
     Column(
@@ -36,17 +48,28 @@ fun CryptoDataScreen(viewModel: CryptoViewModel) {
             .padding(16.dp)
     ) {
 
-        menuList.forEach { entree ->
-            Text(
-                text = entree.name,
-                style = TextStyle(fontSize = 24.sp)
-            )
-            val quantity = cartItems.find { it.id == entree.index }?.quantity ?: 0
-            QuantitySelector(
-                quantity = quantity,
-                onQuantityChange = { newQuantity -> viewModel.updateQuantity(entree.index, newQuantity) },
-                modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 4.dp),
-            )
+        LazyColumn {
+            menuList.forEach { entree ->
+                item {
+                    Text(
+                        text = entree.name,
+                        style = TextStyle(fontSize = 24.sp)
+                    )
+                    val quantity = cartItems.find { it.id == entree.index }?.quantity ?: 0
+                    val isCollapse = currentExtendIndex != entree.index
+                    QuantitySelector(
+                        quantity = quantity,
+                        onQuantityChange = { newQuantity ->
+                            viewModel.updateQuantity(
+                                entree.index,
+                                newQuantity
+                            )
+                        },
+                        isCollapse = isCollapse,
+                        modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 4.dp),
+                    )
+                }
+            }
         }
 
 
